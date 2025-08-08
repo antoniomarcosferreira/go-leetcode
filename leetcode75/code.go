@@ -42,3 +42,30 @@ func gcd(a, b int) int {
 	}
 	return a
 }
+
+// 1431. Kids With the Greatest Number of Candies
+// kidsWithCandies returns a boolean slice where each element indicates
+// whether the corresponding kid can have the greatest number of candies
+// after receiving all the extraCandies.
+// It first finds the maximum number of candies among all kids,
+// then uses a threshold (max - extraCandies) to determine in O(n) time
+// and O(1) extra space if each kid meets or exceeds that maximum.
+func KidsWithCandies(candies []int, extraCandies int) []bool {
+
+	n := len(candies)
+	res := make([]bool, n)
+
+	max := candies[0]
+	for i := 1; i < n; i++ {
+		if candies[i] > max {
+			max = candies[i]
+		}
+	}
+
+	threshold := max - extraCandies
+
+	for i := 0; i < n; i++ {
+		res[i] = candies[i] >= threshold
+	}
+	return res
+}
