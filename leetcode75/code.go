@@ -69,3 +69,64 @@ func KidsWithCandies(candies []int, extraCandies int) []bool {
 	}
 	return res
 }
+
+/*
+605. Can Place Flowers
+*/
+
+func CanPlaceFlowers(flowerbed []int, n int) bool {
+	if n <= 0 {
+		return true
+	}
+
+	for i := 0; i < len(flowerbed); {
+		if flowerbed[i] == 1 {
+			i += 2
+			continue
+		}
+
+		leftOK := i == 0 || flowerbed[i-1] == 0
+		rightOK := i == len(flowerbed)-1 || flowerbed[i+1] == 0
+
+		if leftOK && rightOK {
+			flowerbed[i] = 1
+			n--
+			if n == 0 {
+				return true
+			}
+			i += 2
+		} else {
+			i++
+		}
+	}
+
+	return false
+}
+
+/*
+345. Reverse Vowels of a String
+*/
+
+var vowel = func() (v [256]bool) {
+	for _, c := range []byte("aeiouAEIOU") {
+		v[c] = true
+	}
+	return
+}()
+
+func ReverseVowels(s string) string {
+	b := []byte(s)
+	i, j := 0, len(b)-1
+	for i < j {
+		for i < j && !vowel[b[i]] {
+			i++
+		}
+		for i < j && !vowel[b[j]] {
+			j--
+		}
+		b[i], b[j] = b[j], b[i]
+		i++
+		j--
+	}
+	return string(b)
+}
